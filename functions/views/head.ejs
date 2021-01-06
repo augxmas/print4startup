@@ -1,0 +1,64 @@
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>스타트업인쇄소</title>
+	<script type="text/javascript" async="" src="../js/jquery-3.3.1.min.js"></script>	
+
+	<script defer src="https://code.getmdl.io/1.1.3/material.min.js"></script>
+	<script defer src="/__/firebase/8.2.1/firebase-app.js"></script>
+    <script defer src="/__/firebase/8.2.1/firebase-auth.js"></script>
+    <script defer src="/__/firebase/8.2.1/firebase-database.js"></script>
+    <script defer src="/__/firebase/8.2.1/firebase-firestore.js"></script>
+    <script defer src="/__/firebase/8.2.1/firebase-functions.js"></script>
+    <script defer src="/__/firebase/8.2.1/firebase-messaging.js"></script>
+    <script defer src="/__/firebase/8.2.1/firebase-storage.js"></script>
+    <script defer src="/__/firebase/8.2.1/firebase-analytics.js"></script>
+    <script defer src="/__/firebase/8.2.1/firebase-remote-config.js"></script>
+	<script defer src="/__/firebase/8.2.1/firebase-performance.js"></script>
+	
+	<script defer src="/__/firebase/init.js?useEmulator=true"></script>
+
+	<link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.orange-indigo.min.css">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+	<link rel="stylesheet" href="../css/reset.css">		
+	<link rel="stylesheet" href="../css/layout.css">
+	<script>
+		function inquiry(param){
+			$('#inquiry').fadeIn();
+			document.getElementById('_product').value = '명함';
+		}
+		/*
+		$( document ).ready(function() {
+			console.log( "ready!" );
+	
+			$('#message').on('click',function(){
+				$('#message').fadeOut();
+			});
+	
+		});
+		//*/
+		function confirm(param){
+			if(param == 'yes'){
+				firebase.auth().signOut();
+				$('#confirm').fadeOut();
+				$('.btn-login').html('로그인');
+			}else{
+				$('#confirm').fadeOut();
+			}
+		}
+		
+		function sendPasswordResetEmail(){
+			firebase.auth().sendPasswordResetEmail('augxmas@gmail.com')
+			.then(function() {
+				  // Password reset email sent.
+				alert('success ? ');
+			}).catch(function(error) {
+				  alert(error);
+			});
+		}
+	
+	</script>
+	
+	<%- include ("firebase.ejs") %>
+</head>

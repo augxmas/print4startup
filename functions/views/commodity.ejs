@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="ko">
+	<%- include ("head.ejs") %>
+<body>
+  
+ <div id="wrap" class="sub-wrap">
+	<%- include ("header.ejs") %>
+	<div id="container">
+		<div class="section sub-container">
+			<h2 class="sub-tt">주문내역</h2>
+			
+			<!--div class="my-tab-wrap">
+				<button type="button" class="my-tab on-tab">완료</button>
+				<button type="button" class="my-tab">인쇄중</button>
+				<button type="button" class="my-tab">취소</button>
+			</div-->
+			<div class="board-head">
+				<span class="board-total">합계: 25,000 / 35,000 (80%, 완료)</span>
+				<div class="list-btn-area">
+					<button type="button" class="btn">삭제</button>
+				</div>
+			</div>
+			<div class="board-list">
+				<table>
+					<colgroup>
+						<col style="width:60px;"/>
+						<col style="width:150px;"/>
+						<col style="width:150px;"/>
+						<col style="width:150px;"/>
+						<col />
+						<col style="width:150px;"/>
+						<col style="width:100px;"/>
+						<col style="width:100px;"/>
+						<col style="width:100px;"/>
+					</colgroup>
+					<thead>
+						<tr>
+							<th><input type="checkbox" id="" name=""></th>
+							<th>주문번호</th>
+							<th>주문일</th>
+							<th>완료일</th>
+							<th>상품</th>
+							<th>가격</th>
+							<th>결제방식</th>
+							<th>결제상태</th>
+							<th>주문상태</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td><input type="checkbox" id="" name=""></td>
+							<td>OM-0001</td>
+							<td>YYYY-MM-DD</td>
+							<td>YYYY-MM-DD</td>
+							<td>포스터</td>
+							<td>10,000</td>
+							<td>마일일지</td>
+							<td>완료</td>
+							<td>접수</td>
+						</tr>
+						<tr>
+							<td><input type="checkbox" id="" name=""></td>
+							<td>OM-0001</td>
+							<td>YYYY-MM-DD</td>
+							<td>YYYY-MM-DD</td>
+							<td>포스터</td>
+							<td>10,000</td>
+							<td>마일일지</td>
+							<td>완료</td>
+							<td>접수</td>
+						</tr>
+						<tr>
+							<td><input type="checkbox" id="" name=""></td>
+							<td>OM-0001</td>
+							<td>YYYY-MM-DD</td>
+							<td>YYYY-MM-DD</td>
+							<td>포스터</td>
+							<td>10,000</td>
+							<td>마일일지</td>
+							<td>완료</td>
+							<td>접수</td>
+						</tr>
+						<tr>
+							<td><input type="checkbox" id="" name=""></td>
+							<td>OM-0001</td>
+							<td>YYYY-MM-DD</td>
+							<td>YYYY-MM-DD</td>
+							<td>포스터</td>
+							<td>10,000</td>
+							<td>마일일지</td>
+							<td>완료</td>
+							<td>접수</td>
+						</tr>
+						<tr>
+							<td><input type="checkbox" id="" name=""></td>
+							<td>OM-0001</td>
+							<td>YYYY-MM-DD</td>
+							<td>YYYY-MM-DD</td>
+							<td>포스터</td>
+							<td>10,000</td>
+							<td>마일일지</td>
+							<td>완료</td>
+							<td>접수</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+
+		</div>	
+	</div>
+	<%- include ("footer.ejs") %>
+ </div>
+ <%- include ("login.ejs") %>
+ <%- include ("signup.ejs") %>
+ <%- include ("message.ejs") %>
+ <%- include ("inquiry.ejs") %>
+
+</body>
+</html>

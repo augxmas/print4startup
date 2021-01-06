@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="ko">
+<%- include ("head.ejs") %>
+<body>
+  
+ <div id="wrap" class="main-wrap">
+	<%- include ("header.ejs") %>	 
+	<!--div id="header">
+		<div class="section head-sec">
+			<button type="button" class="btn-menu">메뉴열기</button>
+			<h1 class="logo"><a href="#">스타트업인쇄소</a></h1>
+			<div class="gnb">
+				<button type="button" class="gnb-close">닫기</button>
+				<div class="gnb-top">
+					<a href="#">로그인</a>
+					<a href="#">회원가입</a>
+				</div>
+				<ul>
+					<li><a href="#">스타트업인쇄소란?</a></li>
+					<li><a href="#">인쇄물 주문하기</a></li>
+					<li><a href="#">정부지원사업안내</a></li>
+					<li><a href="#">공지사항</a></li>
+				</ul>
+			</div>		
+			<div class="top-btn-area">
+				<button type="button" class="btn-login">로그인</button>
+			</div>
+
+		</div>
+	</div-->
+	<div class="main-visual">
+		<dl>
+			<dt>스타트업을 위한 인쇄 플랫폼 </dt>
+			<dd>스타트업이 필요로 하는 인쇄만 쏙쏙 골라서 <br/>지속가능하고 합리적인  인쇄 문화를 만들어 갑니다.</dd>
+		</dl>
+	</div>
+	<div id="container">
+		<div class="section main-container">
+			<div class="main-quick-menu">
+				<div class="menu-item">
+					<a href="/products?product=1">
+						<p class="thumb"><img src="../images/main-menu1.png" alt=""></p>
+						<p class="menu-name">명함 주문하기</p>
+					</a>
+				</div>
+				<div class="menu-item">
+					<a href="/products?product=2">
+						<p class="thumb"><img src="../images/main-menu2.png" alt=""></p>
+						<p class="menu-name">카다록, 브로슈어 주문하기</p>
+					</a>
+				</div>
+				<div class="menu-item">
+					<a href="/products?product=3">
+						<p class="thumb"><img src="../images/main-menu3.png" alt=""></p>
+						<p class="menu-name">리플렛,팜플렛 주문하기</p>
+					</a>
+				</div>
+				<div class="menu-item">
+					<a href="/products?product=4">
+						<p class="thumb"><img src="../images/main-menu4.png" alt=""></p>
+						<p class="menu-name">A2 포스 주문하기</p>
+					</a>
+				</div>
+				<div class="menu-item">
+					<a href="/products?product=5">
+						<p class="thumb"><img src="../images/main-menu5.png" alt=""></p>
+						<p class="menu-name">봉투 주문하기</p>
+					</a>
+				</div>
+				<div class="menu-item">
+					<a href="/products?product=6">
+						<p class="thumb"><img src="../images/main-menu6.png" alt=""></p>
+						<p class="menu-name">쇼핑백 주문하기</p>
+					</a>
+				</div>
+			</div>
+			<div class="main-sec">
+				<%- include ("main-notice.ejs") %>
+				<div class="main-bnr">
+					<div class="bnr-item"><a href="#"><img src="../images/main-bnr1.png" alt=""></a></div>
+					<div class="bnr-item"><a href="#"><img src="../images/main-bnr2.png" alt=""></a></div>
+				</div>
+			</div>
+		</div>	
+	</div>
+	<%- include ("footer.ejs") %>	 	
+ </div>
+ <%- include ("login.ejs") %>
+ <%- include ("signup.ejs") %>
+ <%- include ("message.ejs") %>
+ <%- include ("inquiry.ejs") %> 
+</body>
+</html>
+
+

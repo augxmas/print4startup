@@ -1,0 +1,1075 @@
+<!doctype html>
+<html lang="ko">
+	<%- include ("head.ejs") %>
+	<script>
+		function order(param){
+			//alert('준비 중 ' + param);
+			orderer 	= firebase.auth().currentUser;
+			<% if(product == 1 ){ %>
+				product	= '명함';
+			<% } %>
+			<% if(product == 2 ){ %>
+				product	= '카타로그,브로셔';
+			<% } %>
+			<% if(product == 3 ){ %>
+				product	= '리플렛,팜플렛';
+			<% } %>
+			<% if(product == 4 ){ %>
+				product	= 'A2포스터';
+			<% } %>
+			<% if(product == 5 ){ %>
+				product	= '봉투';
+			<% } %>
+			<% if(product == 6 ){ %>
+				product	= '쇼핑백';
+			<% } %>
+	
+			commodity		= $("#commodity option:selected").val();
+			if(commodity == -1){
+				$('.alert-message').html("규격을 선택해주세요");
+				$('#message').fadeIn();
+				return;
+			}				
+	
+			paper		= $("#paper option:selected").val();
+			if(paper == -1){
+				$('.alert-message').html('용지를 선택해주세요');
+				$('#message').fadeIn();
+				return;
+			}
+			size		= $("#size option:selected").val();
+			if(size == -1){
+				$('.alert-message').html('사이즈를 선택해주세요');
+				$('#message').fadeIn();
+				return;
+			}
+	
+			print_type	= $("#print_type option:selected").val();
+			if(print_type == -1){
+				$('.alert-message').html('인쇄방법을 선택해주세요');
+				$('#message').fadeIn();
+				return;
+			}
+	
+			qty_unit	= $("#qty_unit option:selected").val();
+			if(qty_unit == -1){
+				$('.alert-message').html('부수를 선택해주세요');
+				$('#message').fadeIn();
+				return;
+			}
+	
+			cnt	= $("#cnt option:selected").val();
+			cnt_text	= $("#cnt option:selected").text();
+			console.log(cnt_text);
+			if(cnt == -1){
+				<% if (product == 1) { %>
+					$('.alert-message').html("건수를 선택해주세요");
+				<% }else{ %>
+					$('.alert-message').html("부수를 선택해주세요");
+				<% } %>
+	
+				$('#message').fadeIn();
+				return;
+			}	
+	
+			outer_page	= $("#outer_page option:selected").val();
+			if(outer_page == -1){
+				$('.alert-message').html('표지페이지를 선택해주세요');
+				$('#message').fadeIn();
+				return;
+			}
+	
+			outer_paper	= $("#outer_paper option:selected").val();
+			if(outer_paper == -1){
+				$('.alert-message').html('표지용지를 선택해주세요');
+				$('#message').fadeIn();
+				return;
+			}
+	
+			outer_print_type	= $("#outer_print_type option:selected").val();
+			if(outer_print_type == -1){
+				$('.alert-message').html('표지인쇄방법을 선택해주세요');
+				$('#message').fadeIn();
+				return;
+			}
+	
+	
+		
+	
+			coating		= $("#coating option:selected").val();
+			if(coating == -1){
+				$('.alert-message').html("코팅을 선택해주세요");
+				$('#message').fadeIn();
+				return;
+			}		
+	
+			inner_page	= $("#inner_page option:selected").val();
+			if(inner_page == -1){
+				$('.alert-message').html('내지페이지를 선택해주세요');
+				$('#message').fadeIn();
+				return;
+			}
+	
+			inner_paper	= $("#inner_paper option:selected").val();
+			if(inner_paper == -1){
+				$('.alert-message').html('내지용지를 선택해주세요');
+				$('#message').fadeIn();
+				return;
+			}
+	
+			inner_print_type	= $("#inner_print_type option:selected").val();
+			if(inner_print_type == -1){
+				$('.alert-message').html('내지인쇄방법을 선택해주세요');
+				$('#message').fadeIn();
+				return;
+			}
+	
+			postprocessor	= $("#postprocessor option:selected").val();
+			if(postprocessor == -1){
+				$('.alert-message').html('제본방식을 선택해주세요');
+				$('#message').fadeIn();
+				return;
+			}
+	
+			bending		= $("#bending option:selected").val();
+			if(bending == -1){
+				$('.alert-message').html("접지/오시를 선택해주세요");
+				$('#message').fadeIn();
+				return;
+			}		
+	
+	
+	
+	
+			taping		= $("#taping option:selected").val();
+			if(taping == -1){
+				$('.alert-message').html("테이핑을 선택해주세요");
+				$('#message').fadeIn();
+				return;
+			}		
+	
+			handle		= $("#handle option:selected").val();
+			if(handle == -1){
+				$('.alert-message').html("손잡이를 선택해주세요");
+				$('#message').fadeIn();
+				return;
+			}		
+	
+			ilet		= $("#ilet option:selected").val();
+			if(ilet == -1){
+				$('.alert-message').html("아일렛 선택해주세요");
+				$('#message').fadeIn();
+				return;
+			}		
+	
+	
+			cost		= 10000
+	
+			console.log("order : " + orderer);
+			console.log("product : " + product);
+			console.log("paper : " + paper);
+			console.log("size : " + size);
+			console.log("print_type : " + print_type);
+			console.log("cnt : " + cnt);
+			console.log("coating : " + coating);
+			console.log("bending : " + bending);
+			console.log("cost : " + cost);
+		}
+		function go(param){
+			document.location.href='/products?product='+param
+		}	
+
+	</script>
+<body>
+  
+ <div id="wrap" class="sub-wrap">
+	<%- include ("header.ejs") %>
+	<div id="container">
+		<div class="section sub-container">
+			<h2 class="sub-tt">인쇄물 주문하기</h2>
+			<div class="sub-tab">
+				<button type="button" onClick="go(1)" class="btn-tab <% if(product == 1) {%> active-tab <%}%> ">명함</button>
+				<button type="button" onClick="go(2)" class="btn-tab <% if(product == 2) {%> active-tab <%}%> ">카탈로그,브로셔</button>
+				<button type="button" onClick="go(3)" class="btn-tab <% if(product == 3) {%> active-tab <%}%> ">리플렛,팜플렛</button>
+				<button type="button" onClick="go(4)" class="btn-tab <% if(product == 4) {%> active-tab <%}%> ">A2포스터</button>
+				<button type="button" onClick="go(5)" class="btn-tab <% if(product == 5) {%> active-tab <%}%> ">봉투</button>
+				<button type="button" onClick="go(6)" class="btn-tab <% if(product == 6) {%> active-tab <%}%> ">쇼핑백</button>
+			</div>
+			<!------------------------------------  명함 -------------------------------------------->
+			<% if(product == 1){ %>
+			<div class="prod-wrap">
+				
+				
+				<div class="prod-box">
+					<div class="prod-thumb"><img src="../images/prod-thumb1.png" alt=""></div>
+					<div class="prod-option">
+						<ul class="op-slc-area">
+							<li>
+								<div class="op-label">용지 :</div>
+								<div class="op-cont">
+									<select name="paper" id="paper">
+										<option value="-1">선택</option>
+										<option value="스노우 250G">스노우 250G</option>
+										<option value="아트지 250G">아트지 250G</option>
+									</select>
+								</div>
+							</li>							
+							<li>
+								<div class="op-label">사이즈 :</div>
+								<div class="op-cont">
+									<select name="size" id="size">
+										<option value="-1">선택</option>
+										<option value="90mm*50mm">90mm*50mm</option>
+									</select>
+								</div>
+							</li>							
+							<li>
+								<div class="op-label">인쇄방법 :</div>
+								<div class="op-cont">
+									<select name="print_type" id="print_type">
+										<option value="-1">선택</option>
+										<option value="양면칼라">양면칼라</option>
+									</select>
+								</div>
+							</li>							
+							<li>
+								<div class="op-label">부수 :</div>
+								<div class="op-cont">
+									<select name="qty_unit" id="qty_unit">
+										<option value="-1">선택</option>
+										<option value="100">100장</option>
+										<option value="200">200장</option>
+									</select>
+								</div>
+							</li>	
+
+							<li>
+								<div class="op-label">건 :</div>
+								<div class="op-cont">
+									<select name="cnt" id="cnt">
+										<option value="-1">선택</option>
+										<option value="1">1</option>
+										<option value="1">2</option>
+										<option value="1">3</option>
+										<option value="1">4</option>
+										<option value="1">5</option>
+										<option value="1">6</option>
+										<option value="1">7</option>
+										<option value="1">8</option>
+										<option value="1">9</option>
+										<option value="1">10</option>
+									</select>
+								</div>
+							</li>							
+
+							<li>
+								<div class="op-label">코팅 :</div>
+								<div class="op-cont">
+									<select name="coating" id="coating">
+										<option value="-1">선택</option>
+										<option value="무광">무광</option>
+										<option value="유광">유광</option>
+										<option value="">해당사항없음</option>
+									</select>
+									<p class="op-disc">대량주문의 별도 문의</p>
+								</div>
+							</li>							
+						</ul>
+						<dl class="op-inquriy">
+							<dt><img src="../images/op-icon.png" alt=""></dt>
+							<dd>
+								인쇄물을 주문하시면서 궁금하신 점이 <br/>있으시면 메시지를 남겨주세요.
+								<button type="button" onClick='inquiry(<%=product%>)' class="btn-inq">문의하기</button>
+							</dd>
+						</dl>
+					</div>
+				</div>
+				<div class="prod-op-confirm">
+					<p class="op-title">견적 확인 후 주문하기를 클릭해 주세요. </p>
+					<div class="confirm-table">
+						<table>
+							<thead>
+								<tr>
+									<th>용지</th>
+									<th>사이즈</th>
+									<th>인쇄방법</th>
+									<th>부수</th>
+									<th>건</th>
+								</tr>
+							</thead>
+							<tfoot>
+								<tr>
+									<td colspan="3">합계</td>
+									<td colspan="2">38,500</td>
+								</tr>
+							</tfoot>
+							<tbody>
+								<tr>
+									<td>스노우지</td>
+									<td>A3</td>
+									<td>칼라단면</td>
+									<td>1</td>
+									<td>10</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<div class="confirm-btn-area">
+						<a href="#" class="btn-order" onclick='order(<%=product%>)'>주문하기</a>
+					</div>
+				</div>
+				<div class="prod-op-detail">
+					<p class="op-title">상품상세정보</p>
+					<div class="detail-cont">
+						<!-- 에디터 작성시 내용 지우시고 사용하세요~ -->
+						<div class="detail-img"><img src="../images/detail-img.png" alt=""></div>
+						<p class="detail-txt">스타트업 기업의 사업 초기 명함은 잦은 사업장 및 브랜드의  변경에 맞추어 소량으로 주문, 사용하시는 것이 좋습니다. <br/>가장 많이 사용되는 용지는 스노우, 아트지 250 그램이며, 사이즈는 가로*세로= 90mm * 50mm입니다. </p>
+					</div>
+				</div>
+			</div>
+			<%}%>
+			<!-------------------------------------- end of 명함 ------------------------------------------------------>
+
+			<!-----------------------------------------------  카타로그 ------------------------------------------------>
+			<% if(product == 2){ %>
+			<div class="prod-wrap">
+				<div class="prod-box">
+					<div class="prod-thumb"><img src="../images/prod-thumb1.png" alt=""></div>
+					<div class="prod-option">
+						<ul class="op-slc-area">
+							<li>
+								<div class="op-label">사이즈 :</div>
+								<div class="op-cont">
+									<select name="size" id="size">
+										<option value="-1">선택</option>
+										<option value="A4">A4</option>
+									</select>
+								</div>
+							</li>
+							<li>
+								<div class="op-label">부수 :</div>
+								<div class="op-cont">
+									<select name="cnt" id="cnt">
+										<option value="-1">선택</option>
+										<option value="10">10</option>
+										<option value="30">30</option>
+										<option value="50">50</option>
+										<option value="100">100</option>
+										<option value="200">200</option>
+										<option value="300">300</option>
+										<option value="400">400</option>
+										<option value="500">500</option>
+										<option value="1000">1000</option>
+									</select>
+								</div>
+							</li>										
+							<li>
+								<div class="op-label">표지페이지 :</div>
+								<div class="op-cont">
+									<select name="outer_page" id="outer_page">
+										<option value="-1">선택</option>
+										<option value="4">4P</option>
+										<option value="8">8P</option>
+										<option value="12">12P</option>
+										<option value="16">16P</option>
+										<option value="20">20P</option>
+										<option value="24">24P</option>
+										<option value="28">28P</option>
+										<option value="32">32P</option>
+										<option value="36">36P</option>
+									</select>
+								</div>
+							</li>																				
+							<li>
+								<div class="op-label">표지용지 :</div>
+								<div class="op-cont">
+									<select name="outer_paper" id="outer_paper">
+										<option value="-1">선택</option>
+										<option value="스노우 250G">스노우 250G</option>
+										<option value="아트지 250G">아트지 250G</option>
+									</select>
+								</div>
+							</li>							
+							<li>
+								<div class="op-label">표지인쇄방법 :</div>
+								<div class="op-cont">
+									<select name="outer_print_type" id="outer_print_type">
+										<option value="-1">선택</option>
+										<option value="양면칼라">양면칼라</option>
+									</select>
+								</div>
+							</li>				
+							<li>
+								<div class="op-label">표지코팅 :</div>
+								<div class="op-cont">
+									<select name="coating" id="coating">
+										<option value="-1">선택</option>
+										<option value="무광">무광</option>
+										<option value="유광">유광</option>
+										<option value="">해당사항없음</option>
+									</select>
+								</div>
+							</li>							
+						<li>
+							<div class="op-label">내지페이지 :</div>
+							<div class="op-cont">
+								<select name="inner_page" id="inner_page">
+									<option value="-1">선택</option>
+									<option value="4">4P</option>
+									<option value="8">8P</option>
+									<option value="12">12P</option>
+									<option value="16">16P</option>
+									<option value="20">20P</option>
+									<option value="24">24P</option>
+									<option value="28">28P</option>
+									<option value="32">32P</option>
+									<option value="36">36P</option>
+								</select>
+							</div>
+						</li>																				
+						<li>
+							<div class="op-label">내지용지 :</div>
+							<div class="op-cont">
+								<select name="inner_paper" id="inner_paper">
+									<option value="-1">선택</option>
+									<option value="스노우 250G">스노우 250G</option>
+									<option value="아트지 250G">아트지 250G</option>
+								</select>
+							</div>
+						</li>							
+						<li>
+							<div class="op-label">내지인쇄방법 :</div>
+							<div class="op-cont">
+								<select name="inner_print_type" id="inner_print_type">
+									<option value="-1">선택</option>
+									<option value="양면칼라">양면칼라</option>
+								</select>
+							</div>
+						</li>	
+						<li>
+							<div class="op-label">제본 :</div>
+							<div class="op-cont">
+								<select name="postprocessor" id="postprocessor">
+									<option value="-1">선택</option>
+									<option value="중철제본">중철제본</option>
+									<option value="무선제본">무선제본</option>
+								</select>
+								<p class="op-disc">코팅추가 시 + 10,000원</p>
+							</div>
+						</li>									
+						<dl class="op-inquriy">
+							<dt><img src="../images/op-icon.png" alt=""></dt>
+							<dd>
+								인쇄물을 주문하시면서 궁금하신 점이 <br/>있으시면 메시지를 남겨주세요.
+								<button type="button" onClick='inquiry(<%=product%>)' class="btn-inq">문의하기</button>
+							</dd>
+						</dl>
+					</div>
+				</div>
+				<div class="prod-op-confirm">
+					<p class="op-title">견적 확인 후 주문하기를 클릭해 주세요. </p>
+					<div class="confirm-table">
+						<table>
+							<thead>
+								<tr>
+									<th>사이즈</th>
+									<th>부수</th>
+									<th>표지사이즈</th>
+									<th>표지용지</th>
+									<th>표지인쇄방법</th>
+									<th>표지코팅</th>
+									<th>내지페이지</th>
+									<th>내지용지</th>
+									<th>내지인쇄방법</th>
+									<th>제본</th>
+								</tr>
+							</thead>
+							<tfoot>
+								<tr>
+									<td colspan="5">합계</td>
+									<td colspan="5">38,500</td>
+								</tr>
+							</tfoot>
+							<tbody>
+								<tr>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<div class="confirm-btn-area">
+						<a href="#" class="btn-order" onclick='order(<%=product%>)'>주문하기</a>
+					</div>
+				</div>
+				<div class="prod-op-detail">
+					<p class="op-title">상품상세정보</p>
+					<div class="detail-cont">
+						<!-- 에디터 작성시 내용 지우시고 사용하세요~ -->
+						<div class="detail-img-area">
+							<div class="detail-img"><img src="../images/sub_pho_003.png" alt=""></div>
+							<div class="detail-img"><img src="../images/sub_pho_004.png" alt=""></div>
+						</div>
+						<p class="detail-txt">카다로그/브로셔는 스타트업 기업의 상품이나 회사 소개서등의 인쇄물에 적합합니다. <br/>인쇄물의 구성은 표지(4페이지)와 내지(4의 배수 페이지)로 구성되며, 컨텐츠가 적은 경우 표지 4페이지 만으로 구성되는 경우도 있습니다. <br/>가장 많이 쓰이는 사이즈는 A4 사이즈이며, 주로 중철(스테이플러) 제본 형태가 일반적입니다. <br/>초기 스타트업 기업은 상품 변경, 사업 내용 추가등 변수가 많아 소량(10부 부터 가능) 인쇄가 적합합니다.</p>
+					</div>
+				</div>
+			</div>
+			<%}%>
+			<!------------------------------------------- end of 카타로그 ------------------------------------------------------>
+
+			<!-----------------------------------------------  리플릿 ------------------------------------------------>
+			<% if(product == 3){ %>
+			<div class="prod-wrap">
+				<div class="prod-box">
+					<div class="prod-thumb"><img src="../images/prod-thumb1.png" alt=""></div>
+					<div class="prod-option">
+						<ul class="op-slc-area">
+							<li>
+								<div class="op-label">용지 :</div>
+								<div class="op-cont">
+									<select name="paper" id="paper">
+										<option value="-1">선택</option>
+										<option value="스노우 150G">스노우 150G</option>
+										<option value="아트지 150G">아트지 150G</option>
+									</select>
+								</div>
+							</li>							
+							<li>
+								<div class="op-label">사이즈 :</div>
+								<div class="op-cont">
+									<select name="size" id="size">
+										<option value="-1">선택</option>
+										<option value="A4">A4</option>
+									</select>
+								</div>
+							</li>							
+							<li>
+								<div class="op-label">인쇄방법 :</div>
+								<div class="op-cont">
+									<select name="print_type" id="print_type">
+										<option value="-1">선택</option>
+										<option value="양면칼라">양면칼라</option>
+									</select>
+								</div>
+							</li>							
+							<li>
+								<div class="op-label">부수</div>
+								<div class="op-cont">
+									<select name="cnt" id="cnt">
+										<option value="-1">선택</option>
+										<option value="10">10</option>
+										<option value="30">30</option>
+										<option value="50">50</option>
+										<option value="100">100</option>
+										<option value="200">200</option>
+										<option value="300">300</option>
+										<option value="400">400</option>
+										<option value="500">500</option>
+									</select>
+								</div>
+							</li>							
+							<li>
+								<div class="op-label">코팅 :</div>
+								<div class="op-cont">
+									<select name="coating" id="coating">
+										<option value="-1">선택</option>
+										<option value="무광">무광</option>
+										<option value="유광">유광</option>
+										<option value="">해당사항없음</option>
+									</select>								
+								</div>
+							</li>	
+							<li>
+								<div class="op-label">접지/오시</div>
+								<div class="op-cont">
+									<select name="bending" id="bending">
+										<option value="-1">선택</option>
+										<option value="1">1줄</option>
+										<option value="2">2줄</option>
+										<option value="3">3출</option>
+									</select>
+									<p class="op-disc">Basic 가격 34,000원, 코팅추가 시 + 10,000원</p>
+								</div>
+							</li>							
+						</ul>
+						<dl class="op-inquriy">
+							<dt><img src="../images/op-icon.png" alt=""></dt>
+							<dd>
+								인쇄물을 주문하시면서 궁금하신 점이 <br/>있으시면 메시지를 남겨주세요.
+								<button type="button" onClick='inquiry(<%=product%>)' class="btn-inq">문의하기</button>
+							</dd>
+						</dl>
+					</div>
+				</div>
+				<div class="prod-op-confirm">
+					<p class="op-title">견적 확인 후 주문하기를 클릭해 주세요. </p>
+					<div class="confirm-table">
+						<table>
+							<thead>
+								<tr>
+									<th>용지</th>
+									<th>사이즈</th>
+									<th>인쇄방법</th>
+									<th>부수</th>
+									<th>접지/오시</th>
+									<th>코팅</th>
+								</tr>
+							</thead>
+							<tfoot>
+								<tr>
+									<td colspan="3">합계</td>
+									<td colspan="3">38,500</td>
+								</tr>
+							</tfoot>
+							<tbody>
+								<tr>
+									<td>A4</td>
+									<td>스노우 150g</td>
+									<td>양면칼라</td>
+									<td>10</td>
+									<td>3줄</td>
+									<td>무광</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<div class="confirm-btn-area">
+						<a href="#" class="btn-order" onclick='order(<%=product%>)'>주문하기</a>
+					</div>
+				</div>
+				<div class="prod-op-detail">
+					<p class="op-title">상품상세정보</p>
+					<div class="detail-cont">
+						<!-- 에디터 작성시 내용 지우시고 사용하세요~ -->
+						<div class="detail-img-area">
+							<div class="detail-img"><img src="../images/sub_pho_005.png" alt=""></div>
+							<div class="detail-img"><img src="../images/sub_pho_006.png" alt=""></div>
+						</div>
+						<p class="detail-txt">리플렛은 상품이나 사업소개자료를 배포 할때 많이 사용합니다. <br/>사이즈는 펼친면이 A4의 경우가 가장 많고 이를 2단(총 4페이지), 3단(총 6페이지)으로 접는 형태로 고객에게 배포합니다.<br/>용지 두께는 통상 150그램이 가장 많이 사용 됩니다.<br/>초기 스타트업 기업은 상품 변경, 사업 내용 추가등 변수가 많아 소량(10부 부터 가능) 인쇄가 적합합니다.</p>
+					</div>
+				</div>
+			</div>
+			<%}%>
+			<!------------------------------------------- end of 리플릿 ------------------------------------------------------>
+
+			<!-----------------------------------------------  A2포스터 ------------------------------------------------>
+			<% if(product == 4){ %>
+			<div class="prod-wrap">
+				<div class="prod-box">
+					<div class="prod-thumb"><img src="../images/prod-thumb1.png" alt=""></div>
+					<div class="prod-option">
+						<ul class="op-slc-area">
+							<li>
+								<div class="op-label">용지 :</div>
+								<div class="op-cont">
+									<select name="paper" id="paper">
+										<option value="-1">선택</option>
+										<option value="스노우 150G">스노우 150G</option>
+										<option value="아트지 150G">아트지 150G</option>
+									</select>
+								</div>
+							</li>							
+							<li>
+								<div class="op-label">사이즈 :</div>
+								<div class="op-cont">
+									<select name="size" id="size">
+										<option value="-1">선택</option>
+										<option value="B2">B2</option>
+										<option value="A2">A2</option>
+										<option value="B3">B3</option>
+										<option value="A3">A3</option>
+									</select>
+								</div>
+							</li>							
+							<!--li>
+								<div class="op-label">인쇄방법 :</div>
+								<div class="op-cont">
+									<select name="print_type" id="size">
+										<option value="-1">선택</option>
+										<option value="양면칼라">양면칼라</option>
+									</select>
+								</div>
+							</li-->							
+							<li>
+								<div class="op-label">부수</div>
+								<div class="op-cont">
+									<select name="cnt" id="cnt">
+										<option value="-1">선택</option>
+										<option value="10">10</option>
+										<option value="30">30</option>
+										<option value="50">50</option>
+										<option value="100">100</option>
+										<option value="200">200</option>
+										<option value="300">300</option>
+										<option value="400">400</option>
+										<option value="500">500</option>
+									</select>
+								</div>
+							</li>	
+							<li>
+								<div class="op-label">코팅 :</div>
+								<div class="op-cont">
+									<select name="coating" id="coating">
+										<option value="-1">선택</option>
+										<option value="무광">무광</option>
+										<option value="유광">유광</option>
+										<option value="">해당사항없음</option>
+									</select>
+									<p class="op-disc">대량주문의 별도 문의</p>
+								</div>
+							</li>							
+						</ul>
+						<dl class="op-inquriy">
+							<dt><img src="../images/op-icon.png" alt=""></dt>
+							<dd>
+								인쇄물을 주문하시면서 궁금하신 점이 <br/>있으시면 메시지를 남겨주세요.
+								<button type="button" onClick='inquiry(<%=product%>)' class="btn-inq">문의하기</button>
+							</dd>
+						</dl>
+					</div>
+				</div>
+				<div class="prod-op-confirm">
+					<p class="op-title">견적 확인 후 주문하기를 클릭해 주세요. </p>
+					<div class="confirm-table">
+						<table>
+							<thead>
+								<tr>
+									<th>상품</th>
+									<th>용지</th>
+									<th>Size</th>
+									<th>인쇄방법</th>
+									<th>수량</th>
+									<th>가격(VAT 포함)</th>
+								</tr>
+							</thead>
+							<tfoot>
+								<tr>
+									<td colspan="3">합계</td>
+									<td colspan="3">38,500</td>
+								</tr>
+							</tfoot>
+							<tbody>
+								<tr>
+									<td>포스터</td>
+									<td>스노우지</td>
+									<td>A3</td>
+									<td>칼라단면</td>
+									<td>70</td>
+									<td>38,500</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<div class="confirm-btn-area">
+						<a href="#" class="btn-order" onclick='order(<%=product%>)'>주문하기</a>
+					</div>
+				</div>
+				<div class="prod-op-detail">
+					<p class="op-title">상품상세정보</p>
+					<div class="detail-cont">
+						<!-- 에디터 작성시 내용 지우시고 사용하세요~ -->
+						<div class="detail-img-area">
+							<div class="detail-img"><img src="../images/sub_pho_007.png" alt=""></div>
+							<div class="detail-img"><img src="../images/sub_pho_008.png" alt=""></div>
+						</div>
+						<p class="detail-txt">스타트업 기업의 포스터는 행사시 또는 사내, 공유 사무실등에 게시하는 경우에 주로 쓰입니다. <br/>사이즈는 A2가 전체 포스터 사이즈 중 90% 이상을 차지하며 최대 B2 사이즈까지 가능합니다.<br/>초기 스타트업 기업은 상품 변경, 사업 내용 추가등 변수가 많아 소량(10부 부터 가능) 인쇄가 적합합니다.</p>
+					</div>
+				</div>
+			</div>
+			<%}%>
+			<!------------------------------------------- end of A2포스터 ------------------------------------------------------>
+
+
+			<!-----------------------------------------------  봉투 ------------------------------------------------>
+			<% if(product == 5){ %>
+			<div class="prod-wrap">
+				<div class="prod-box">
+					<div class="prod-thumb"><img src="../images/prod-thumb1.png" alt=""></div>
+					<div class="prod-option">
+						<ul class="op-slc-area">
+							<li>
+								<div class="op-label">규격 :</div>
+								<div class="op-cont">
+									<select name="commodity" id="commodity">
+										<option value="-1">선택</option>
+										<option value="대봉투">대봉투</option>
+										<option value="소봉투">소봉투</option>
+									</select>
+								</div>
+							</li>							
+							<li>
+								<div class="op-label">용지 :</div>
+								<div class="op-cont">
+									<select name="paper" id="paper">
+										<option value="-1">선택</option>
+										<option value="백모조 120G">백모조 120G</option>
+									</select>
+								</div>
+							</li>							
+							<li>
+								<div class="op-label">사이즈 :</div>
+								<div class="op-cont">
+									<select name="size" id="size">
+										<option value="-1">선택</opgtion>
+										<option value="330 X 245">330 X 245</option>
+										<option value="220 X 105">220 X 105</option>
+									</select>
+								</div>
+							</li>	
+							<li>
+								<div class="op-label">인쇄방법 :</div>
+								<div class="op-cont">
+									<select name="print_type" id="print_type">
+										<option value="-1">선택</option>
+										<option value="단면칼라">단면칼라</option>
+									</select>
+								</div>
+							</li>								
+							<li>
+								<div class="op-label">부수 :</div>
+								<div class="op-cont">
+									<select name="qty_unit" id="qty_unit">
+										<option value="-1">선택</option>
+										<option value="500">100장</option>
+										<option value="1000">1000장</option>
+									</select>
+								</div>
+							</li>														
+						
+							<li>
+								<div class="op-label">테이핑 :</div>
+								<div class="op-cont">
+									<select name="taping" id="taping">
+										<option value="-1">선택</option>
+										<option value="있음">있음</option>
+										<option value="없음">없음</option>
+										<option value="">해당사항없음</option>
+									</select>
+									<!--p class="op-disc">대량주문의 별도 문의</p-->
+								</div>
+							</li>							
+						</ul>
+						<dl class="op-inquriy">
+							<dt><img src="../images/op-icon.png" alt=""></dt>
+							<dd>
+								인쇄물을 주문하시면서 궁금하신 점이 <br/>있으시면 메시지를 남겨주세요.
+								<button type="button" onClick='inquiry(<%=product%>)' class="btn-inq">문의하기</button>
+							</dd>
+						</dl>
+					</div>
+				</div>
+				<div class="prod-op-confirm">
+					<p class="op-title">견적 확인 후 주문하기를 클릭해 주세요. </p>
+					<div class="confirm-table">
+						<table>
+							<thead>
+								<tr>
+									<th>규격</th>
+									<th>용지</th>
+									<th>사이즈</th>
+									<th>인쇄방법</th>
+									<th>부수</th>
+									<th>테이핑</th>
+								</tr>
+							</thead>
+							<tfoot>
+								<tr>
+									<td colspan="3">합계</td>
+									<td colspan="3">38,500</td>
+								</tr>
+							</tfoot>
+							<tbody>
+								<tr>
+									<td>대봉투</td>
+									<td>백모조 120G</td>
+									<td>330 X 245</td>
+									<td>단면칼라</td>
+									<td>10</td>
+									<td>있음</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<div class="confirm-btn-area">
+						<a href="#" class="btn-order" onclick='order(<%=product%>)'>주문하기</a>
+					</div>
+				</div>
+				<div class="prod-op-detail">
+					<p class="op-title">상품상세정보</p>
+					<div class="detail-cont">
+						<!-- 에디터 작성시 내용 지우시고 사용하세요~ -->
+						<div class="detail-img-area">
+							<div class="detail-img"><img src="../images/sub_pho_009.png" alt=""></div>
+							<div class="detail-img"><img src="../images/sub_pho_010.png" alt=""></div>
+						</div>
+						<p class="detail-txt">스타트업 기업의 봉투는 내용물이 노출되지 않도록 고객에게 전달, 발송등에 사용됩니다. <br/>대/소봉투가 주로 많이 사용되며 스타트업 기업에는 최소량(현재 500매)의 주문이 권장됩니다.<br/>초기 스타트업 기업은 잦은 주소 이전, 대량 발송이 적은 경우가 많아 필요시 주문하는 것을 추천합니다.</p>
+					</div>
+				</div>
+
+			</div>
+			<%}%>
+			<!------------------------------------------- end of 봉투 ------------------------------------------------------>
+
+			<!-----------------------------------------------  쇼핑백 ------------------------------------------------>
+			<% if(product == 6){ %>
+			<div class="prod-wrap">
+				<div class="prod-box">
+					<div class="prod-thumb"><img src="../images/prod-thumb1.png" alt=""></div>
+					<div class="prod-option">
+						<ul class="op-slc-area">
+							<li>
+								<div class="op-label">용지 :</div>
+								<div class="op-cont">
+									<select name="paper" id="paper">
+										<option value="-1">선택</option>
+										<option value="아트지 180g">아트지 180g</option>
+									</select>
+								</div>
+							</li>							
+							<li>
+								<div class="op-label">사이즈 :</div>
+								<div class="op-cont">
+									<select name="size" id="size">
+										<option value="-1">선택</option>
+										<option value="270X190X100">270X190X100</option>
+										<option value="270X190X100">9270X190X100</option>
+									</select>
+								</div>
+							</li>							
+							<li>
+								<div class="op-label">인쇄방법 :</div>
+								<div class="op-cont">
+									<select name="print_type" id="print_type">
+										<option value="-1">선택</option>
+										<option value="단면칼라">단면칼라</option>
+									</select>
+								</div>
+							</li>							
+							<li>
+								<div class="op-label">부수 :</div>
+								<div class="op-cont">
+									<select name="qty_unit" id="qty_unit">
+										<option value="-1">선택</option>
+										<option value="200">200</option>
+										<option value="500">500</option>
+										<option value="1000">1000</option>
+									</select>
+								</div>
+							</li>	
+							<li>
+								<div class="op-label">코팅 :</div>
+								<div class="op-cont">
+									<select name="coating" id="coating">
+										<option value="-1">선택</option>
+										<option value="무광">단면무광</option>
+										<option value="유광">단면유광</option>
+										<option value="">해당사항없음</option>
+									</select>
+								</div>
+							</li>			
+							<li>
+								<div class="op-label">손잡이 :</div>
+								<div class="op-cont">
+									<select name="handle" id="handle">
+										<option value="-1">선택</option>
+										<option value="검정">검정</option>
+										<option value="남색">남색</option>
+										<option value="핑크">핑크</option>
+										<option value="하늘">하늘</option>
+									</select>
+								</div>
+							</li>							
+							<li>
+								<div class="op-label">아일렛 :</div>
+								<div class="op-cont">
+									<select name="ilet" id="ilet">
+										<option value="-1">선택</option>
+										<option value="은색">은색</option>
+										<option value="검정">검정</option>
+									</select>
+								</div>
+							</li>											
+						</ul>
+						<dl class="op-inquriy">
+							<dt><img src="../images/op-icon.png" alt=""></dt>
+							<dd>
+								인쇄물을 주문하시면서 궁금하신 점이 <br/>있으시면 메시지를 남겨주세요.
+								<button type="button" onClick='inquiry(<%=product%>)' class="btn-inq">문의하기</button>
+							</dd>
+						</dl>
+					</div>
+				</div>
+				<div class="prod-op-confirm">
+					<p class="op-title">견적 확인 후 주문하기를 클릭해 주세요. </p>
+					<div class="confirm-table">
+						<table>
+							<thead>
+								<tr>
+									<th>용지</th>
+									<th>사이즈</th>
+									<th>인쇄방법</th>
+									<th>부수</th>
+									<th>코팅</th>
+									<th>손잡이</th>
+									<th>아일렛</th>
+								</tr>
+							</thead>
+							<tfoot>
+								<tr>
+									<td colspan="4">합계</td>
+									<td colspan="3">38,500</td>
+								</tr>
+							</tfoot>
+							<tbody>
+								<tr>
+									<td>아트지 180g</td>
+									<td>330X450X100</td>
+									<td>단면칼라</td>
+									<td>10</td>
+									<td>없음</td>
+									<td>하늘</td>
+									<td>은색</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<div class="confirm-btn-area">
+						<a href="#" class="btn-order" onclick='order(<%=product%>)'>주문하기</a>
+					</div>
+				</div>
+				<div class="prod-op-detail">
+					<p class="op-title">상품상세정보</p>
+					<div class="detail-cont">
+						<!-- 에디터 작성시 내용 지우시고 사용하세요~ -->
+						<div class="detail-img-area">
+							<div class="detail-img"><img src="../images/sub_pho_011.png" alt=""></div>
+							<div class="detail-img"><img src="../images/sub_pho_012.png" alt=""></div>
+						</div>
+						<p class="detail-txt">스타트업 기업의 쇼핑백은 일정 규모 이상의 행사시(전시회 참가등) 고객에게 판촉물과 카다로그, 회사 소개서등을 제공 하실때 주로 사용됩니다. <br/>년간 행사 규모에 맞게 수량을 예측하여 주문하심을 권장합니다.<br/>이상품은 상담 후 진행하시기를 추천합니다.</p>
+					</div>
+				</div>
+
+
+			</div>
+			<%}%>
+			<!------------------------------------------- end of 쇼핑백 ------------------------------------------------------>			
+
+		</div>	
+	</div>
+	<%- include ("footer.ejs") %>
+ </div>
+ <%- include ("login.ejs") %>
+ <%- include ("signup.ejs") %>
+ <%- include ("message.ejs") %>
+ <%- include ("inquiry.ejs") %> 
+</body>
+</html>
+

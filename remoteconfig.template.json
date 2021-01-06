@@ -1,0 +1,35 @@
+{
+    "conditions": [{
+      "name": "android_english",
+      "expression": "device.os == 'android' && device.country in ['us', 'uk']",
+      "tagColor": "BLUE"
+    }, {
+      "name": "tenPercent",
+      "expression": "percent <= 10",
+      "tagColor": "BROWN"
+    }],
+    "parameters": {
+      "welcome_message": {
+        "defaultValue": {
+          "value": "Welcome to this sample app"
+        },
+        "conditionalValues": {
+          "tenPercent": {
+            "value": "Welcome to this new sample app"
+          }
+        },
+        "description": "The sample app's welcome message"
+      },
+      "welcome_message_caps": {
+        "defaultValue": {
+          "value": "false"
+        },
+        "conditionalValues": {
+          "android_english": {
+            "value": "true"
+          }
+        },
+        "description": "Whether the welcome message should be displayed in all capital letters."
+      }
+    }
+  }
