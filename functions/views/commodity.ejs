@@ -7,13 +7,13 @@
 	<%- include ("header.ejs") %>
 	<div id="container">
 		<div class="section sub-container">
-			<h2 class="sub-tt">주문내역</h2>
+			<h2 class="sub-tt">이력보기</h2>
 			
-			<!--div class="my-tab-wrap">
-				<button type="button" class="my-tab on-tab">완료</button>
-				<button type="button" class="my-tab">인쇄중</button>
-				<button type="button" class="my-tab">취소</button>
-			</div-->
+			<div class="my-tab-wrap">
+				<button type="button" class="my-tab on-tab">주문내역</button>
+				<button type="button" class="my-tab">장바구니</button>
+				<button type="button" class="my-tab">문의내역</button>
+			</div>
 			<div class="board-head">
 				<span class="board-total">합계: 25,000 / 35,000 (80%, 완료)</span>
 				<div class="list-btn-area">
@@ -44,6 +44,15 @@
 							<th>결제방식</th>
 							<th>결제상태</th>
 							<th>주문상태</th>
+							<th>배송지</th>
+							<!--
+								문의하기 
+							<th><input type="checkbox" id="" name=""></th>
+							<th>번호</th>
+							<th>상품</th>
+							<th>내용</th>
+							<th>작성일</th>
+							-->
 						</tr>
 					</thead>
 					<tbody>
@@ -103,6 +112,21 @@
 							<td>접수</td>
 						</tr>
 					</tbody>
+
+					<!-- 문의하기 
+					<tbody>
+						<tr>
+							<th><input type="checkbox" id="" name=""></th>
+							<th>번호</th>
+							<th>상품</th>
+							<th>내용</th>
+							<th>작성일</th>
+						</tr>
+					</tbody>
+					-->
+
+
+
 				</table>
 			</div>
 
